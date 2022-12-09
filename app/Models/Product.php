@@ -14,6 +14,7 @@ class Product extends Model implements TranslatableContract
 
     protected $table = 'products';
     public $translatedAttributes = ['name','description'];
+    protected $appends = ['profit_percent'];
     protected $guarded = []; 
 
     public function category(){
@@ -23,6 +24,12 @@ class Product extends Model implements TranslatableContract
     {
         return ($val !== null) ? ('images/' . $val) : "";
 
+    }
+    public  function getProfitPercentAttribute(){
+
+        $profit = $this->sale_price - $this->purchase_price;
+        $profit_percent = $profit * 100 /$this->purchase_price;
+        return number_format($profit_percent,2);   
     }
 
 }

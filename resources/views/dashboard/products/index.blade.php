@@ -30,6 +30,14 @@
                             <div class="col-md-4">
                                 <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">
                             </div>
+                            <div class="col-md-4">
+                                <select name="category_id" class="form-control">
+                                    <option value="">@lang('site.all_categories')</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{$category->id}}" {{request()->category_id == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            </div>
 
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
@@ -58,9 +66,11 @@
                                 <th>@lang('site.name')</th>
                                 <th>@lang('site.description')</th>
                                 <th>@lang('site.image')</th>
+                                <th>@lang('site.category')</th>
                                 <th>@lang('site.stock')</th>
                                 <th>@lang('site.purchase_price')</th>
                                 <th>@lang('site.sale_price')</th>
+                                <th>@lang('site.profit_percent')%</th>
                                 <th>@lang('site.action')</th>
 
                                 {{-- @if (auth()->user()->hasPermission('products_update','products_delete'))
@@ -77,9 +87,11 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{!! $product->description !!}</td>
                                     <td><img src="{{ asset($product->image)}}" width="100" height="100" class="img-thumbnail" alt=""></td>
+                                    <td>{{ $product->category->name }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->purchase_price }}</td>
                                     <td>{{ $product->sale_price }}</td>
+                                    <td>{{ $product->profit_percent }}%</td>
                                     <td>
                                         @if (auth()->user()->hasPermission('products_update'))
                                             <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>

@@ -82,22 +82,26 @@ class UserController extends Controller
     public function update(UpdateDataValidation $request,$id)
     {
         
-        $filePath = "";
-        if ($request->has('image')) {
-                $filePath = $this->uploadImage('users',$request->image);
-        }
          $users = User::find($id);
-         if($users->image != 'default.png'){
- 
-         $path = Public_path($users->image);
-        if(File::exists($path)){
-            File::delete($path);
-        }
-     }
         $request_data = $request->except(['_token','password','password_confirmation','permissions']);
+        if($request->image){
+            if($users->image != 'default.png'){
+    
+                 $path = Public_path($users->image);
+                 if(File::exists($path)){
+                     File::delete($path);
+                 }               
+             }
+         
+             $filePath = "";
+             if ($request->has('image')) {
+                     $filePath = $this->uploadImage('users',$request->image);
+             }
+             $request_data['image'] = $filePath;
+    
+         }
         $request_data['password'] = bcrypt($request->password);
         $request_data['password_confirmation'] = bcrypt($request->password_confirmation);
-        $request_data['image'] = $filePath;
 
 
         $users->update($request_data);
