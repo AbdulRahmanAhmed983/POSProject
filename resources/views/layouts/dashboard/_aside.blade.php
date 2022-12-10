@@ -24,7 +24,9 @@
             @if (auth()->user()->hasPermission('products_read'))
             <li><a href="{{ route('dashboard.products.index') }}"><i class="fa fa-th"></i><span>@lang('site.products')</span></a></li>
               @endif
-
+              @if (auth()->user()->hasPermission('clients_read'))
+              <li><a href="{{ route('dashboard.clients.index') }}"><i class="fa fa-th"></i><span>@lang('site.clients')</span></a></li>
+          @endif
 
 
             {{-- 
@@ -34,9 +36,7 @@
                 <li><a href="{{ route('dashboard.stores.index') }}"><i class="fa fa-th"></i><span>@lang('site.stores')</span></a></li>
             @endif
 
-            @if (auth()->user()->hasPermission('read_clients'))
-                <li><a href="{{ route('dashboard.clients.index') }}"><i class="fa fa-th"></i><span>@lang('site.clients')</span></a></li>
-            @endif
+           
 
             
             @if (auth()->user()->hasPermission('read_suppliers'))
