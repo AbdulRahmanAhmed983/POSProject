@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\productController;
+use App\Http\Controllers\Dashboard\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,10 @@ Route::prefix('dashboard')->name('dashboard.')->group(function(){
      ############## Start Product Routes  ###############
      Route::resource('products',productController::class)->except(['show']);
      ############## End Product Routes  ###############
+ 
+     ############## Start Clients Routes  ###############
+     Route::resource('clients',ClientController::class)->except(['show']);
+     ############## End Clients Routes  ###############
  
 
 
