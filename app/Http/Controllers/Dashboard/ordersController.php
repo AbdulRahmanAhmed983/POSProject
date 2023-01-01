@@ -26,7 +26,7 @@ class ordersController extends Controller
     }
 
     public function destroy(Order $order){
-       // dd($order->products->first()->pivot->quantity); => 3la4an azawed quantity
+    //    dd($order->products->first()->pivot->quantity); => 3la4an azawed quantity
 
        foreach($order->products as $product){
 
