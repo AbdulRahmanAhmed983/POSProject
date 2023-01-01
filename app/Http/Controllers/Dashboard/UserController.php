@@ -51,7 +51,7 @@ class UserController extends Controller
 
     public function store(ValidatorRequest $request)
     {
-        $filePath = "";
+        $filePath = "users/default.png";
         if ($request->has('image')) {
                 $filePath = $this->uploadImage('users',$request->image);
         }

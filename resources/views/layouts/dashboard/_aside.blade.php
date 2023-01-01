@@ -27,6 +27,9 @@
               @if (auth()->user()->hasPermission('clients_read'))
               <li><a href="{{ route('dashboard.clients.index') }}"><i class="fa fa-th"></i><span>@lang('site.clients')</span></a></li>
           @endif
+              @if (auth()->user()->hasPermission('orders_read'))
+              <li><a href="{{ route('dashboard.orders.index') }}"><i class="fa fa-th"></i><span>@lang('site.orders')</span></a></li>
+          @endif
 
 
             {{-- 

@@ -48,7 +48,7 @@ class productController extends Controller
             'stock' => 'required'
     ];
             $request->validate($rules);
-            $filePath = "";
+            $filePath = "products/default.png";
             if ($request->has('image')) {
                     $filePath = $this->uploadImage('products',$request->image);
             }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use App\Models\Order;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
@@ -19,6 +20,9 @@ class Product extends Model implements TranslatableContract
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+    public function orders(){
+        return $this->belongsToMany(Order::class,'product_order');
     }
     public function getImageAttribute($val)
     {

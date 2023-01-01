@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
 
 class Client extends Model
 {
@@ -13,5 +14,11 @@ class Client extends Model
     protected $casts = [
         'phone' => 'array'
     ]; 
-
+    public function getFirstNameAttribute($value){
+        return ucfirst($value);
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'client_id','id');
+    }
 }

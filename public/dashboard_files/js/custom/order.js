@@ -12,16 +12,16 @@ $(document).ready(function () {
 
         //var quantity = Number($(this).data('quantity'), 2);
      //   alert(id);
+    //  <td><input type="double" name="products[${id}][transport]" class="form-control input-sm product-transport" min="0" value="0"></td>
 
         $(this).removeClass('btn-success').addClass('btn-default hidden');
 
         var html =
             `<tr>
                 <td>${name}</td>
-                <td><input type="double" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
+                <td><input type="number" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
                 <td><input type="double" name="products[${id}][price]"  class="form-control input-sm product-price1" min="0" value=${price}></td>
-                 <td><input type="double" name="products[${id}][transport]" class="form-control input-sm product-transport" min="0" value="0"></td>
-       
+
                 <td class="product-price">${price}</td>   
                 <td><button class="btn btn-danger btn-sm remove-product-btn" data-id="${id}"><span class="fa fa-trash"></span></button></td>
             </tr>`;
@@ -90,7 +90,8 @@ $(document).ready(function () {
         var quantity = Number($(this).val()); //2
         var unitPrice =  $(this).closest('tr').find('.product-price1').val(); //150
 
-        $(this).closest('tr').find('.product-price').html(Number(quantity * unitPrice + transport, 2));
+        $(this).closest('tr').find('.product-price').html(Number(quantity * unitPrice));
+        // $(this).closest('tr').find('.product-price').html(Number(quantity * unitPrice + transport, 2));
         calculateTotal();
 
     });//end of product quantity change
@@ -162,15 +163,16 @@ $(document).ready(function () {
 
             e.preventDefault();
     
-            $('#loading').css('display', 'flex');
+             $('#loading').css('display', 'flex');
             
             var url = $(this).data('url');
             var method = $(this).data('method');
             $.ajax({
                 url: url,
                 method: method,
+                
                 success: function(data) {
-    
+                    
                     $('#loading').css('display', 'none');
                     $('#order-product-list').empty();
                     $('#order-product-list').append(data);
@@ -238,9 +240,11 @@ function calculateTotal() {
        var adds2 = parseFloat($('.adds2').val()); //150
    
        var totalPrice =  parseFloat($('.total-price').html()); //150
-       console.log(Number(totalPrice + adds1 + adds2 - disc1 - disc2 - disc3,2));
+    //    console.log(Number(totalPrice + adds1 + adds2 - disc1 - disc2 - disc3,2));
 
-       $('.total-price').html(Number(totalPrice + adds1 + adds2 - disc1 - disc2 - disc3,2 ));
+       
+       $('.total-price').html(Number(totalPrice));
+    //    $('.total-price').html(Number(totalPrice + adds1 + adds2 - disc1 - disc2 - disc3,2 ));
    
  
     //end of product price

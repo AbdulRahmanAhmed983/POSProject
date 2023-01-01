@@ -26,24 +26,25 @@
                                 </h3>
                             </div><!-- end of box header -->   
                             <div class="box-body">
-                                <form method="POST" action="{{route('dashboard.clients.orders.index',$client->id)}}">
+                                <form method="POST" action="{{route('dashboard.clients.orders.store',$client->id)}}">
                                     @csrf
                                     {{ method_field('post') }}
+                                    @include('partials._errors')
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th>@lang('site.product')</th>
                                                 <th>@lang('site.quantity')</th>
-                                                <th>@lang('site.sale_price')</th>
+                                                <th>@lang('site.price')</th>
+                                                <th>@lang('site.total')</th>
+
                                               </tr>
                                         </thead>
                                         <tbody class="order-list">
                                             
                                         </tbody>
                                     </table>
-                                    <h4>@lang('site.total') : 
-                                    <span class="total-price">0.00</span>
-                                    </h4>
+                                        <h4>@lang('site.total') : <span class="total-price">0.00</span></h4>
                                     <button class="btn btn-primary btn-block disabled" id="add-order-form-btn">@lang('site.add_order')</button>
                                 </form>
                             </div>
@@ -54,7 +55,7 @@
                         <div class="box box-primary">
                             <div class="box-header">
                                 <h3 class="box-title" style="margin-bottom: 10px">@lang('site.categories')
-                                    <small>{{ $orders->total() }}</small>
+                                    <small>{{ $categories->count() }}</small>
                                 </h3>
                             </div><!-- end of box header -->   
 

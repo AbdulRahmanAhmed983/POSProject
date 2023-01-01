@@ -76,7 +76,7 @@
                                     <td>{{ $client->name }}</td>
                                     {{-- array_filter => بتعدي علي الاراي وتشيل اي حاجه بfalse or null
                                         implode('-',array_filter($client->phone)) --}}
-                                    <td>{{ implode('-',$client->phone) }}</td>
+                                    <td>{{ is_array($client->phone) ? implode('-',$client->phone) : $client->phone }}</td>
                                     <td>{{ $client->address }}</td>
                                     <td>
                                         @if (auth()->user()->hasPermission('orders_create'))

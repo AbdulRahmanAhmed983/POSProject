@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\productController;
 use App\Http\Controllers\Dashboard\ClientController;
+ use App\Http\Controllers\Dashboard\ordersController;
 use App\Http\Controllers\Dashboard\Client\OrderController;
 
 /*
@@ -46,7 +47,10 @@ Route::prefix('dashboard')->name('dashboard.')->group(function(){
      ############## End Clients Routes  ###############
 
  
-
+   ############## Start Oder Routes  ###############
+   Route::resource('orders',ordersController::class)->except(['show']);
+   Route::get('/orders/{order}/products',[ordersController::class,'products'])->name('orders.products');
+   ############## End Order Routes  ###############
 
 
 
