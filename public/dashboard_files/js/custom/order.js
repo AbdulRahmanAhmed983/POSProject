@@ -21,7 +21,6 @@ $(document).ready(function () {
                 <td>${name}</td>
                 <td><input type="number" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
                 <td><input type="double" name="products[${id}][price]"  class="form-control input-sm product-price1" min="0" value=${price}></td>
-
                 <td class="product-price">${price}</td>   
                 <td><button class="btn btn-danger btn-sm remove-product-btn" data-id="${id}"><span class="fa fa-trash"></span></button></td>
             </tr>`;

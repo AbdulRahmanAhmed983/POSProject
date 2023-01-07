@@ -12,16 +12,12 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    
-    public function index()
-    {
-        
-    }
+  
 
    
-    public function create(Client $client,Order $order)
+    public function create(Client $client)
     {        
-        $orders = Order::paginate(5);
+        $orders = $client->orders()->with('products')->paginate(5);
         $categories = Category::with('products')->get();
         return view('dashboard.clients.orders.create',compact(['client','categories','orders']));
     }
@@ -34,7 +30,34 @@ class OrderController extends Controller
             // 'quantities' => 'required|array',
             
         ]);
-       $order = $client->orders()->create([]);
+            $this->attach_order($request,$client);
+
+         return redirect()->route('dashboard.orders.index')->with('success',__('site.added_successfully'));
+    }
+  
+    public function edit(Client $client,Order $order)
+    {
+        $categories = Category::with('products')->get();
+        return view('dashboard.clients.orders.edit',compact('categories','client','order'));
+    }
+
+    
+    public function update(Request $request, Client $client,Order $order)
+    {
+        $request->validate([
+            'products' => 'required|array',            
+        ]);
+        $this->detach_order($order);
+        $this->attach_order($request,$client);
+
+        return redirect()->route('dashboard.orders.index')->with('success',__('site.updated_successfully'));
+
+    }
+
+    private function attach_order($request,$client){
+
+
+        $order = $client->orders()->create([]);
 
         $order->products()->attach($request->products);
 
@@ -51,25 +74,19 @@ class OrderController extends Controller
         $order->update([
             'total_price' => $total_price
         ]);
-        // dd($total_price);
-
-         return redirect()->route('dashboard.orders.index')->with('success',__('site.added_successfully'));
-    }
-  
-    public function edit(Client $client,Order $order)
-    {
-        
+        // dd($total_price);    
     }
 
-    
-    public function update(Request $request, Client $client,Order $order)
-    {
-        
-    }
 
-  
-    public function destroy(Client $client,Order $order)
-    {
-        
+    private function detach_order($order){
+
+        foreach($order->products as $product){
+
+            $product->update([
+                'stock' => $product->stock + $product->pivot->quantity
+            ]);
+                 $order->delete();
+        }
+
     }
 }

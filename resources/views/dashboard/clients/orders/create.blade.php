@@ -10,7 +10,7 @@
             <h1>@lang('site.add_order')</h1>
 
             <ol class="breadcrumb">
-                {{-- <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li> --}}
+                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li><a href="{{ route('dashboard.clients.index') }}">@lang('site.clients')</a></li>
                 <li class="active">@lang('site.add_order')</li>
             </ol>
@@ -49,6 +49,60 @@
                                 </form>
                             </div>
                         </div>
+                        
+                    @if ($client->orders->count() > 0)
+
+                    <div class="box box-primary">
+
+                        <div class="box-header">
+
+                            <h3 class="box-title" style="margin-bottom: 10px">@lang('site.previous_orders')
+                                <small>{{ $orders->total() }}</small>
+                            </h3>
+
+                        </div><!-- end of box header -->
+
+                        <div class="box-body">
+
+                            @foreach ($orders as $order)
+
+                                <div class="panel-group">
+
+                                    <div class="panel panel-success">
+
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#{{ $order->created_at->format('d-m-Y-s') }}">{{ $order->created_at->toFormattedDateString() }}</a>
+                                            </h4>
+                                        </div>
+
+                                        <div id="{{ $order->created_at->format('d-m-Y-s') }}" class="panel-collapse collapse">
+
+                                            <div class="panel-body">
+
+                                                <ul class="list-group">
+                                                    @foreach ($order->products as $product)
+                                                        <li class="list-group-item">{{ $product->name }}</li>
+                                                    @endforeach
+                                                </ul>
+
+                                            </div><!-- end of panel body -->
+
+                                        </div><!-- end of panel collapse -->
+
+                                    </div><!-- end of panel primary -->
+
+                                </div><!-- end of panel group -->
+
+                            @endforeach
+
+                            {{ $orders->links() }}
+
+                        </div><!-- end of box body -->
+
+                    </div><!-- end of box -->
+
+                @endif
                     </div>
                         
                     <div class="col-md-6">
@@ -108,17 +162,6 @@
                                         {{-- </div> --}}
                                         </div>
                                     @endforeach
-
-
-
-
-
-
-
-
-
-
-
 
 
 
