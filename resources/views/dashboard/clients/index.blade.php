@@ -59,6 +59,7 @@
                                 <th>@lang('site.name')</th>
                                 <th>@lang('site.phone')</th>
                                 <th>@lang('site.address')</th>
+                                <th>@lang('site.add_order')</th>
                                 <th>@lang('site.action')</th>
 
                                 {{-- @if (auth()->user()->hasPermission('clients_update','clients_delete'))
@@ -75,8 +76,15 @@
                                     <td>{{ $client->name }}</td>
                                     {{-- array_filter => بتعدي علي الاراي وتشيل اي حاجه بfalse or null
                                         implode('-',array_filter($client->phone)) --}}
-                                    <td>{{ implode('-',$client->phone) }}</td>
+                                    <td>{{ is_array($client->phone) ? implode('-',$client->phone) : $client->phone }}</td>
                                     <td>{{ $client->address }}</td>
+                                    <td>
+                                        @if (auth()->user()->hasPermission('orders_create'))
+                                        <a href="{{route('dashboard.clients.orders.create',$client->id)}}" class="btn btn-warning btn-sm">@lang('site.add_order')</a>
+                                            @else
+                                            <a href="#" class="btn btn-warning btn-sm disabled">@lang('site.add_order')</a>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if (auth()->user()->hasPermission('clients_update'))
                                             <a href="{{ route('dashboard.clients.edit', $client->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>

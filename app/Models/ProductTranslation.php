@@ -9,7 +9,9 @@ class ProductTranslation extends Model
 {
     use HasFactory;
     protected $table = 'product_translations';
-    protected $fillable = ['id','name','description'];
+    protected $fillable = ['id','name','description','image'];
     public $timestamps = false;
+
+
 
 }

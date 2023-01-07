@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
 use App\Models\Role;
+use App\Models\Order;
 use App\Models\Permission;
 
 class User extends Authenticatable
@@ -61,7 +62,7 @@ class User extends Authenticatable
             return ($val !== null) ? ('images/' . $val) : "";
 
         }
-
+       
 
 
     // public function roles()

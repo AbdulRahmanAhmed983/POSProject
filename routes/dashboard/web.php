@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\WelcomController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\productController;
 use App\Http\Controllers\Dashboard\ClientController;
+ use App\Http\Controllers\Dashboard\ordersController;
+use App\Http\Controllers\Dashboard\Client\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ function(){
 
 
 Route::prefix('dashboard')->name('dashboard.')->group(function(){
-   Route::get('/index',[DashboardController::class,'index'])->name('index');
+   Route::get('/',[WelcomController::class,'index'])->name('welcome');
 
      ############## Start user Routes  ###############
             Route::resource('users',UserController::class)->except(['show']);
@@ -41,9 +43,14 @@ Route::prefix('dashboard')->name('dashboard.')->group(function(){
  
      ############## Start Clients Routes  ###############
      Route::resource('clients',ClientController::class)->except(['show']);
+     Route::resource('clients.orders',OrderController::class)->except(['show']);
      ############## End Clients Routes  ###############
- 
 
+ 
+   ############## Start Oder Routes  ###############
+   Route::resource('orders',ordersController::class)->except(['show']);
+   Route::get('/orders/{order}/products',[ordersController::class,'products'])->name('orders.products');
+   ############## End Order Routes  ###############
 
 
 
